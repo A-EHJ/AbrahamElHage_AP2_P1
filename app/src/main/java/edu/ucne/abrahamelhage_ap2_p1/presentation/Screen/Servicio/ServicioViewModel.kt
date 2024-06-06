@@ -1,4 +1,4 @@
-package edu.ucne.abrahamelhage_ap2_p1.presentation.Servicio
+package edu.ucne.abrahamelhage_ap2_p1.presentation.Screen.Servicio
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,7 +16,8 @@ class ServicioViewModel(
 ) :
     ViewModel() {
 
-    val regexTotal = Regex("^[0-9]{0,7}(\\.[0-9]{0,2})?$")
+    val regexPrecio = Regex("[0-9]{0,7}\\.?[0-9]{0,2}")
+
 
 
     var uiState = MutableStateFlow(ServicioUIState())
@@ -42,15 +43,12 @@ class ServicioViewModel(
         }
     }
 
-    fun onTotalChanged(precio: String) {
-        if (precio.matches(regexTotal)) {
-            var precioNuevo = precio.toDoubleOrNull() ?: 0.0
-            if (precioNuevo == null) {
-                precioNuevo = 0.0
-            }
+    fun onPrecioChanged(precio: String) {
+        if (precio.matches(regexPrecio)) {
+            val precioNuevo = precio.toDouble()
             uiState.update {
                 it.copy(
-                    precio = precioNuevo,
+                    precio = precioNuevo
                 )
             }
         }
@@ -75,8 +73,15 @@ class ServicioViewModel(
 
     fun saveServicio(): Boolean {
 
+        var valido = true
+
         uiState.update {
-            it.copy(descripcionError = null)
+            it.copy(descripcionError = null, precioError = null)
+
+        }
+
+        viewModelScope.launch {
+
         }
 
         if (uiState.value.servicioId == 0) {
@@ -85,7 +90,6 @@ class ServicioViewModel(
             }
         }
 
-        var valido = true
 
         if (uiState.value.descripcion.isEmpty() || uiState.value.descripcion.isBlank() || uiState.value.descripcion == "") {
             uiState.update {
@@ -102,12 +106,23 @@ class ServicioViewModel(
         }
 
         if (!valido) {
-            return false
+            return valido
         }
 
+
+
         viewModelScope.launch {
+            /*if (descripcionServicioExiste()) {
+                uiState.update {
+                    it.copy(descripcionError = "La descripción ya existe")
+                }
+                valido = false
+                return@launch
+            }*/
+
             Serviciorepository.saveServicio(uiState.value.toEntity())
         }
+
         if (!valido) {
             return false
         } else {
@@ -121,10 +136,19 @@ class ServicioViewModel(
                 it.copy(
                     servicioId = null,
                     descripcion = "",
-                    descripcionError = null
+                    descripcionError = null,
+                    precio = 0.0,
+                    precioError = null
                 )
             }
         }
+    }
+
+    private suspend fun descripcionServicioExiste(): Boolean {
+        return Serviciorepository.existeServicio(
+            uiState.value.descripcion,
+            uiState.value.servicioId ?: 0
+        )
     }
 }
 
