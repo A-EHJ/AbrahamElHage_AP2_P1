@@ -9,7 +9,7 @@ import edu.ucne.abrahamelhage_ap2_p1.data.local.entities.ServicioEntity
     entities = [
         ServicioEntity::class
     ],
-    version = 12,
+    version = 1,
     exportSchema = false
 )
 abstract class ServicioDb : RoomDatabase() {
