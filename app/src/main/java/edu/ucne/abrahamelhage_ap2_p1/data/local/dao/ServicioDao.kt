@@ -25,6 +25,16 @@ interface ServicioDao {
     @Delete
     suspend fun delete(servicio: ServicioEntity)
 
+    @Query(
+        """
+        SELECT servicioId
+        FROM Servicios 
+        WHERE descripcion=:descripcion AND servicioId!=:id
+        LIMIT 1
+        """
+    )
+    suspend fun find(descripcion: String, id: Int): Boolean
+
     @Query("SELECT * FROM Servicios")
     fun getAll(): Flow<List<ServicioEntity>>
 }
