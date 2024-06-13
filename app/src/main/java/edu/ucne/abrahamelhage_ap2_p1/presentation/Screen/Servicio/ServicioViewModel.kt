@@ -1,7 +1,9 @@
 package edu.ucne.abrahamelhage_ap2_p1.presentation.Screen.Servicio
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.ucne.abrahamelhage_ap2_p1.data.local.entities.ServicioEntity
 import edu.ucne.abrahamelhage_ap2_p1.data.repository.ServicioRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,15 +11,20 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ServicioViewModel(
+
+@HiltViewModel
+class ServicioViewModel @Inject constructor(
+
+    private val savedStateHandle: SavedStateHandle,
     private val Serviciorepository: ServicioRepository,
-    private val ServicioId: Int
 ) :
     ViewModel() {
+    private var ServicioId: Int = 0
+
 
     val regexPrecio = Regex("[0-9]{0,7}\\.?[0-9]{0,2}")
-
 
 
     var uiState = MutableStateFlow(ServicioUIState())

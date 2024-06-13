@@ -43,13 +43,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import edu.ucne.abrahamelhage_ap2_p1.ui.theme.AbrahamElHage_AP2_P1Theme
 
 @Composable
 fun ServicioScreen(
-    viewModel: ServicioViewModel,
+    viewModel: ServicioViewModel = hiltViewModel(),
     navController: NavController,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

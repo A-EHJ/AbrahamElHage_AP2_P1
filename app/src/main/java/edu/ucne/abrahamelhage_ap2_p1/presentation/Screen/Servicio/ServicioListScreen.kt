@@ -23,13 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import edu.ucne.abrahamelhage_ap2_p1.data.local.entities.ServicioEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ServicioListScreen(
-    viewModel: ServicioViewModel,
+    viewModel: ServicioViewModel = hiltViewModel(),
     onVerServicio: (ServicioEntity) -> Unit,
 ) {
     val Servicios by viewModel.servicios.collectAsStateWithLifecycle()
@@ -64,7 +65,6 @@ fun ServicioListScreen(
         }
     }
 }
-
 
 
 @Composable
@@ -149,7 +149,7 @@ private fun ServicioRow(
         ) {
             Text(text = Servicio.servicioId.toString(), modifier = Modifier.weight(0.10f))
             Text(
-                text = Servicio.descripcion?: "",
+                text = Servicio.descripcion ?: "",
                 modifier = Modifier.weight(0.50f)
             )
             Text(

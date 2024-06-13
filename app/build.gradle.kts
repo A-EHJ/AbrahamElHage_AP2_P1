@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     alias(libs.plugins.kotlinx.serialization)
     id("org.jetbrains.kotlin.plugin.compose")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -91,5 +92,10 @@ dependencies {
     implementation (libs.material3)
     implementation ("androidx.compose.material3:material3-window-size-class:1.2.1")
     implementation (libs.androidx.material3.adaptive.navigation.suite)
-    implementation("androidx.drawerlayout:drawerlayout:1.2.0")
+    implementation(libs.androidx.drawerlayout)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
 }
