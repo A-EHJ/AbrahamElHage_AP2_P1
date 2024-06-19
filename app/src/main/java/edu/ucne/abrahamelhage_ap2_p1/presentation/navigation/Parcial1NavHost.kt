@@ -14,6 +14,7 @@ import edu.ucne.abrahamelhage_ap2_p1.presentation.Screen.Servicio.ServicioViewMo
 @Composable
 fun Parcial1NavHost(navHostController: NavHostController) {
     NavHost(navController = navHostController, startDestination = Screen.ServicioList) {
+
         composable<Screen.ServicioList> {
             ServicioListScreen(
                 onVerServicio = {
