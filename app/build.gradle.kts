@@ -34,12 +34,8 @@ android {
         }
     }
 
-    composeCompiler{
-        enableStrongSkippingMode = true
-        includeSourceInformation = true
-    }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17 //Todo: 2. Investigar versiones Java
+        sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
@@ -53,31 +49,28 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation (libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
 
-    implementation(platform(libs.androidx.compose.bom)) //ultima version del bom aqui: https://developer.android.com/jetpack/compose/bom
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    //navegacion
+    // Navigation
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
 
-    //Room
+    // Room
     implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
-
-    //  optional - Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)
 
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -86,35 +79,21 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation (libs.material)
-    implementation (libs.material3)
-
-    implementation (libs.material3)
-    implementation ("androidx.compose.material3:material3-window-size-class:1.2.1")
-    implementation (libs.androidx.material3.adaptive.navigation.suite)
+    // Material
+    implementation(libs.material)
+    implementation(libs.material3)
+    implementation("androidx.compose.material3:material3-window-size-class:1.2.1")
+    implementation(libs.androidx.material3.adaptive.navigation.suite)
     implementation(libs.androidx.drawerlayout)
 
+    //Hilt Dependencies
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    //retrofit
+    //retroFit
     implementation(libs.retrofit)
     implementation(libs.moshi.kotlin)
     implementation(libs.converter.moshi)
     implementation(libs.logging.interceptor)
-
-    //Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
-
-    implementation(libs.retrofit)
-    implementation(libs.moshi.kotlin)
-    implementation(libs.converter.moshi)
-    implementation(libs.logging.interceptor)
-
-    implementation(libs.gson)
-
-
 }

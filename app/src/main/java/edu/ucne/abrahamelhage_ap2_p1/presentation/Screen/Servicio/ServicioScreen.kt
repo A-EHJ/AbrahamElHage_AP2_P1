@@ -1,4 +1,4 @@
-package edu.ucne.abrahamelhage_ap2_p1.presentation.Screen.Servicio
+package edu.ucne.abrahamelhage_ap2_p1.presentation.screen.servicio
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,6 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.AlertDialog
@@ -172,7 +171,7 @@ fun ServicioBody(
                 }
                 OutlinedButton(
                     onClick = {
-                        var id = uiState.servicioId
+                        val id = uiState.servicioId
 
                         if (onSaveServicio()) {
                             if (id != 0 && id != null) {

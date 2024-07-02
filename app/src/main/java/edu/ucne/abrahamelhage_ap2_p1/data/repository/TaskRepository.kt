@@ -9,15 +9,37 @@ import javax.inject.Inject
 class TaskRepository @Inject constructor(
     private val taskApi: TaskApi
 ) {
-    suspend fun TaskFact(): Flow<Resource<List<TaskDto>>> = flow {
+    fun getTasks(): Flow<Resource<List<TaskDto>>> = flow {
         emit(Resource.Loading())
         try {
-            val users = taskApi.getTask()
+            val users = taskApi.getTasks()
             emit(Resource.Success(users))
         } catch (e: Exception) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occured"))
         }
     }
+
+    suspend fun getTask(taskId: Int): TaskDto? {
+        return try {
+            taskApi.getTask(taskId)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    suspend fun deleteTask(taskId: Int) {
+        taskApi.deleteTask(taskId)
+    }
+
+    suspend fun addTask(task: TaskDto) {
+        taskApi.addTask(task)
+    }
+
+    suspend fun updateTask(task: TaskDto) {
+        taskApi.updateTask(task.id, task)
+    }
+
+
 }
 
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
